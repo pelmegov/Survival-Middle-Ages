@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\models\User;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -47,6 +48,14 @@ AppAsset::register($this);
             'url' => ['/site/login']
         ];
     } else {
+
+        if (User::isUserAdmin(Yii::$app->user->identity->username)) {
+            $menuItems[] = [
+                'label' => Yii::t('msg/pages_info', 'User Admin'),
+                'url' => ['/site/test']
+            ];
+        }
+
         $menuItems[] = [
             'label' => Yii::t('msg/pages_info', 'Profile'),
             'url' => ['/site/profile']

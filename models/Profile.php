@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\Session;
 
 /**
  * This is the model class for table "profile".
@@ -19,17 +20,39 @@ use Yii;
 class Profile extends \yii\db\ActiveRecord
 {
 
+    public function createProfile()
+    {
+    }
+
+    /**
+     * Обновление никнейма
+     * @param $profile
+     * @return bool
+     */
+    public function updateNickname($profile)
+    {
+        if ($profile->gold >= 200) {
+            $profile->first_name = $this->first_name;
+            $profile->gold -= 200;
+            return true;
+        }
+        return false;
+    }
+
     public function updateProfile()
     {
         $profile = ($profile = Profile::findOne(Yii::$app->user->id)) ? $profile : new Profile();
         $profile->user_id = Yii::$app->user->id;
-        $profile->first_name = $this->first_name;
-//        $profile->second_name = $this->second_name;
-//        $profile->middle_name = $this->middle_name;
-        if($profile->save()):
+
+        $this->updateNickname($profile);
+
+        if ($profile->save()):
             $user = $this->user ? $this->user : User::findOne(Yii::$app->user->id);
-            $username = Yii::$app->request->post('User')['username'];
-            $user->username = isset($username) ? $username : $user->username;
+
+            /* Изменение эмейла */
+            $email = Yii::$app->request->post('User')['email'];
+            $user->email = isset($email) ? $email : $user->email;
+
             return $user->save() ? true : false;
         endif;
         return false;
@@ -62,7 +85,7 @@ class Profile extends \yii\db\ActiveRecord
     {
         return [
             'user_id' => 'User ID',
-            'first_name' => 'First Name',
+            'first_name' => 'Nickname',
             'fish' => 'Fish',
             'animal' => 'Animal',
             'wood' => 'Wood',

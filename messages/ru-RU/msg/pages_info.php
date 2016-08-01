@@ -7,6 +7,7 @@
  */
 return [
     'Registration' => 'Зарегистрироваться',
+    'User Admin' => 'Редактирование Юзеров',
     'Survival: Middle Ages' => 'Выживание: Средневековья',
     'Site Name' => 'Имя сайта',
     'Home' => 'Главная',

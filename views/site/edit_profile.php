@@ -20,7 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
     if ($model->user)
         echo $form->field($model->user, 'email');
     ?>
+
     <?= $form->field($model, 'first_name') ?>
+    <p class="bg-danger" style="padding: 10px; font-weight: bold;">Внимание, смена никнейма стоит 200 Gold</p>
 
     <div class="form-group">
         <?= Html::submitButton('Редактировать', ['class' => 'btn btn-primary']) ?>

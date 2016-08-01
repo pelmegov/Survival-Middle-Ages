@@ -22,10 +22,27 @@ use yii\behaviors\TimestampBehavior;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    const ROLE_USER = 10;
+    const ROLE_ADMIN = 20;
+
     const STATUS_DELETED = 0;
     const STATUS_NOT_ACTIVE = 1;
     const STATUS_ACTIVE = 10;
     public $password;
+
+    /**
+     * Проверка на администратора
+     * @param $username
+     * @return bool
+     */
+    public static function isUserAdmin($username)
+    {
+        if (static::findOne(['username' => $username, 'role' => self::ROLE_ADMIN])){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * @inheritdoc
@@ -41,6 +58,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            ['role', 'default', 'value' => 10],
+            ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_ADMIN]],
             [['username', 'email', 'password'], 'filter', 'filter' => 'trim'],
             [['username', 'email', 'status'], 'required'],
             ['email', 'email'],
