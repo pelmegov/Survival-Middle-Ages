@@ -37,12 +37,12 @@ class BehaviorsController extends Controller {
                         'roles' => ['?'],
                     ],
                     [
+                        'controllers' => ['site'],
                         'actions' => ['logout', 'profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['about', 'profile', 'test'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {

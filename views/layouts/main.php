@@ -37,7 +37,7 @@ AppAsset::register($this);
 
 
     $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Home'), 'url' => ['/site/index']];
-    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Contact'), 'url' => ['/site/contact']];
+//    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Contact'), 'url' => ['/site/contact']];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = [
             'label' => Yii::t('msg/pages_info', 'Registration'),
@@ -48,18 +48,18 @@ AppAsset::register($this);
             'url' => ['/site/login']
         ];
     } else {
-
-        if (User::isUserAdmin(Yii::$app->user->identity->username)) {
-            $menuItems[] = [
-                'label' => Yii::t('msg/pages_info', 'User Admin'),
-                'url' => ['/site/test']
-            ];
-        }
-
         $menuItems[] = [
             'label' => Yii::t('msg/pages_info', 'Profile'),
             'url' => ['/site/profile']
         ];
+
+        if (User::isUserAdmin(Yii::$app->user->identity->username)) {
+            $menuItems[] = [
+                'label' => Yii::t('msg/pages_info', 'User Admin'),
+                'url' => ['/profile/index']
+            ];
+        }
+
         $menuItems[] = [
             'label' => Yii::t('msg/pages_info', 'Logout') . ' (' . Yii::$app->user->identity->username . ')',
             'url' => ['/site/logout'],
