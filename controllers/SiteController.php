@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Profile;
 use Yii;
 use app\models\RegForm;
 use app\models\User;
@@ -170,6 +171,39 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        return $this->render('profile');
+
+        $model = ($model = Profile::findOne(Yii::$app->user->id)) ? $model : new Profile();
+
+        return $this->render(
+            'profile',
+            [
+                'model' => $model
+            ]
+        );
+    }
+
+    public function actionEdit_profile()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = ($model = Profile::findOne(Yii::$app->user->id)) ? $model : new Profile();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()):
+            if ($model->updateProfile()):
+                Yii::$app->session->setFlash('success', 'Профиль изменен');
+            else:
+                Yii::$app->session->setFlash('error', 'Профиль не изменен');
+                Yii::error('Ошибка записи. Профиль не изменен');
+                return $this->refresh();
+            endif;
+        endif;
+
+        return $this->render(
+            'edit_profile',
+            [
+                'model' => $model
+            ]
+        );
     }
 }

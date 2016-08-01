@@ -69,11 +69,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         ];
     }
 
-//    /* Связи */
-//    public function getProfile()
-//    {
-//        return $this->hasOne(Profile::className(), ['user_id' => 'id']);
-//    }
+    /* Связи */
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::className(), ['user_id' => 'id']);
+    }
 
     /* Поведения */
     public function behaviors()
