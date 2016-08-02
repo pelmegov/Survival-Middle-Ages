@@ -6,8 +6,8 @@
  * Time: 15:36
  */
 return [
-    'Registration' => 'Зарегистрироваться',
-    'User Admin' => 'Редактирование Юзеров',
+    'Registration' => 'Регистрация',
+    'User Admin' => 'Управление пользователями',
     'Survival: Middle Ages' => 'Выживание: Средневековья',
     'Site Name' => 'Имя сайта',
     'Home' => 'Главная',

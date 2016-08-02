@@ -18,8 +18,8 @@ class ProfileSearch extends Profile
     public function rules()
     {
         return [
-            [['user_id', 'fish', 'animal', 'wood', 'stone', 'gold'], 'integer'],
-            [['first_name'], 'safe'],
+            [['user_id'], 'integer'],
+            [['nickname'], 'safe'],
         ];
     }
 
@@ -60,14 +60,9 @@ class ProfileSearch extends Profile
         // grid filtering conditions
         $query->andFilterWhere([
             'user_id' => $this->user_id,
-            'fish' => $this->fish,
-            'animal' => $this->animal,
-            'wood' => $this->wood,
-            'stone' => $this->stone,
-            'gold' => $this->gold,
         ]);
 
-        $query->andFilterWhere(['like', 'first_name', $this->first_name]);
+        $query->andFilterWhere(['like', 'nickname', $this->nickname]);
 
         return $dataProvider;
     }

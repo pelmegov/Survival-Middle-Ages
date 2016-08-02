@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\Profile;
+use app\models\Resource;
+use app\models\UserResource;
 use Yii;
 use app\models\RegForm;
 use app\models\User;
@@ -146,15 +148,21 @@ class SiteController extends BehaviorsController
             return $this->goHome();
         }
 
-        $model = ($model = Profile::findOne(Yii::$app->user->id)) ? $model : new Profile();
+        $profile = ($profile = Profile::findOne(Yii::$app->user->id)) ? $profile : new Profile();
+        $model = UserResource::find()
+            ->where(['user_id'=>Yii::$app->user->id])
+            ->with(['resource', 'user'])
+            ->all();
 
         return $this->render(
             'profile',
             [
-                'model' => $model
+                'model' => $model,
+                'profile' => $profile
             ]
         );
     }
+
 
     public function actionEdit_profile()
     {
@@ -166,6 +174,7 @@ class SiteController extends BehaviorsController
         if ($model->load(Yii::$app->request->post()) && $model->validate()):
             if ($model->updateProfile()):
                 Yii::$app->session->setFlash('success', 'Профиль изменен');
+                return $this->actionProfile();
             else:
                 Yii::$app->session->setFlash('error', 'Профиль не изменен');
                 Yii::error('Ошибка записи. Профиль не изменен');

@@ -1,7 +1,7 @@
 <?php
 use yii\db\Schema;
 use yii\db\Migration;
-class m150711_083606_create_profile_table extends Migration
+class m200000_000000_profile extends Migration
 {
     public function safeUp()
     {
@@ -9,11 +9,7 @@ class m150711_083606_create_profile_table extends Migration
             'profile',
             [
                 'user_id' => Schema::TYPE_PK,
-                'first_name' => Schema::TYPE_STRING.'(32)',
-                'fish' => Schema::TYPE_INTEGER,
-                'animal' => Schema::TYPE_INTEGER,
-                'wood' => Schema::TYPE_INTEGER,
-                'stone' => Schema::TYPE_INTEGER
+                'nickname' => Schema::TYPE_STRING.'(32)'
             ]
         );
         $this->addForeignKey('profile_user', 'profile', 'user_id', 'user', 'id', 'cascade', 'cascade');

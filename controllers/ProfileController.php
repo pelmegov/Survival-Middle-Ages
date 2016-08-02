@@ -12,8 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * ProfileController implements the CRUD actions for Profile model.
  */
-class ProfileController extends BehaviorsController
+class ProfileController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * Lists all Profile models.

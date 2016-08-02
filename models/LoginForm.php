@@ -56,24 +56,11 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => 'Ник',
+            'username' => 'Логин',
             'email' => 'Емайл',
             'password' => 'Пароль',
             'rememberMe' => 'Запомнить меня'
         ];
-    }
-
-    /**
-     * Вход для администратора
-     * @return bool
-     */
-    public function loginAdmin()
-    {
-        if ($this->validate() && User::isUserAdmin($this->username)) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
-        } else {
-            return false;
-        }
     }
 
     public function login()

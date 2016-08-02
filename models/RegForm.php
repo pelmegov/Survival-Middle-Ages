@@ -29,6 +29,7 @@ class RegForm extends Model
             [['username', 'email', 'password'], 'filter', 'filter' => 'trim'],
             [['username', 'email', 'password'], 'required'],
             ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/', 'message' => 'В поле логина допустимы лишь английские символы и цифры'],
             ['password', 'string', 'min' => 6, 'max' => 255],
             ['username', 'unique',
                 'targetClass' => User::className(),
@@ -49,7 +50,7 @@ class RegForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => 'Имя пользователя',
+            'username' => 'Логин (используется для входа на сайт)',
             'email' => 'Эл. почта',
             'password' => 'Пароль',
             'role' => 'Роль'
@@ -80,11 +81,37 @@ class RegForm extends Model
         $profile = new Profile();
 
         /* Базовые настройки профиля */
-        $profile->first_name = "DEFAULT_USER_" . $user->id;
-        $profile->fish = 5;
-        $profile->stone = 10;
-        $profile->animal = 20;
-        $profile->wood = 10;
+        $profile->nickname = "DEFAULT_USER_" . $user->id;
+
+        $resource = new UserResource();
+        $resource->user_id = $user->id;
+        $resource->resource_id = 1;
+        $resource->amount = 200;
+        $resource->save();
+
+        $resource = new UserResource();
+        $resource->user_id = $user->id;
+        $resource->resource_id = 2;
+        $resource->amount = 2;
+        $resource->save();
+
+        $resource = new UserResource();
+        $resource->user_id = $user->id;
+        $resource->resource_id = 3;
+        $resource->amount = 2;
+        $resource->save();
+
+        $resource = new UserResource();
+        $resource->user_id = $user->id;
+        $resource->resource_id = 4;
+        $resource->amount = 2;
+        $resource->save();
+
+        $resource = new UserResource();
+        $resource->user_id = $user->id;
+        $resource->resource_id = 5;
+        $resource->amount = 2;
+        $resource->save();
 
         /* Сохранение Profile и возврат User */
         return $profile->save() ? $user : false;

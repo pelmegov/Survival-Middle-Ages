@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         echo $form->field($model->user, 'email');
     ?>
 
-    <?= $form->field($model, 'first_name') ?>
+    <?= $form->field($model, 'nickname') ?>
     <p class="bg-danger" style="padding: 10px; font-weight: bold;">Внимание, смена никнейма стоит 200 Gold</p>
 
     <div class="form-group">

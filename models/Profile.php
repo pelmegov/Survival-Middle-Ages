@@ -3,26 +3,17 @@
 namespace app\models;
 
 use Yii;
-use yii\web\Session;
 
 /**
  * This is the model class for table "profile".
  *
  * @property integer $user_id
- * @property string $first_name
- * @property integer $fish
- * @property integer $animal
- * @property integer $wood
- * @property integer $stone
+ * @property string $nickname
  *
  * @property User $user
  */
 class Profile extends \yii\db\ActiveRecord
 {
-
-    public function createProfile()
-    {
-    }
 
     /**
      * Обновление никнейма
@@ -31,9 +22,17 @@ class Profile extends \yii\db\ActiveRecord
      */
     public function updateNickname($profile)
     {
-        if ($profile->gold >= 200) {
-            $profile->first_name = $this->first_name;
-            $profile->gold -= 200;
+
+        $resource = UserResource::find()
+            ->where(['user_id'=>Yii::$app->user->id])
+            ->where(['resource_id' => 1])
+            ->with('resource')
+            ->one();
+
+        if ($resource->amount >= 200 && $profile->nickname != $this->nickname) {
+            $profile->nickname = $this->nickname;
+            $resource->amount -= 200;
+            $resource->save();
             return true;
         }
         return false;
@@ -72,8 +71,7 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fish', 'animal', 'wood', 'stone', 'gold'], 'integer'],
-            [['first_name'], 'string', 'max' => 32],
+            [['nickname'], 'string', 'max' => 32],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -85,12 +83,7 @@ class Profile extends \yii\db\ActiveRecord
     {
         return [
             'user_id' => 'User ID',
-            'first_name' => 'Nickname',
-            'fish' => 'Fish',
-            'animal' => 'Animal',
-            'wood' => 'Wood',
-            'stone' => 'Stone',
-            'gold' => 'Gold'
+            'nickname' => 'Nickname',
         ];
     }
 

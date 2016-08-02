@@ -26,7 +26,7 @@ class BehaviorsController extends Controller {
                     [
                         'allow' => true,
                         'controllers' => ['site'],
-                        'actions' => ['index', 'contact', 'captcha']
+                        'actions' => ['index', 'contact', 'captcha', 'error']
                     ],
                     /* Для гостей */
                     [
@@ -36,12 +36,14 @@ class BehaviorsController extends Controller {
                         'actions' => ['reg', 'login'],
                         'roles' => ['?'],
                     ],
+                    /* Для зарегистрированных пользователей */
                     [
                         'controllers' => ['site'],
-                        'actions' => ['logout', 'profile'],
+                        'actions' => ['logout', 'profile', 'edit_profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    /* Для администраторов */
                     [
                         'allow' => true,
                         'roles' => ['@'],
