@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use app\models\Profile;
 use app\models\Resource;
-use app\models\UserResource;
+use app\models\ProfileResource;
 use Yii;
 use app\models\RegForm;
 use app\models\User;
@@ -32,16 +32,6 @@ class SiteController extends BehaviorsController
         ];
     }
 
-    public function actionTest()
-    {
-        return $this->render('test');
-    }
-
-    /**
-     * Главная
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         return $this->render('index');
@@ -149,7 +139,7 @@ class SiteController extends BehaviorsController
         }
 
         $profile = ($profile = Profile::findOne(Yii::$app->user->id)) ? $profile : new Profile();
-        $model = UserResource::find()
+        $model = ProfileResource::find()
             ->where(['user_id'=>Yii::$app->user->id])
             ->with(['resource', 'user'])
             ->all();

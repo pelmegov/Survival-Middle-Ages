@@ -74,47 +74,51 @@ class RegForm extends Model
         if ($this->scenario === 'emailActivation')
             $user->generateSecretKey();
 
-        /* Сохранение нового User и возврат ошибки, если это не удалось сделать */
+        /* Сохранение User и возврат ошибки, если это не удалось сделать */
         if (!$user->save()) return false;
 
         /* Создание профиля для только что созданного User */
         $profile = new Profile();
-
-        /* Базовые настройки профиля */
+        /* Задание дефолтного значения имени */
         $profile->nickname = "DEFAULT_USER_" . $user->id;
+        $profile->save();
 
-        $resource = new UserResource();
+        $resource = new ProfileResource();
         $resource->user_id = $user->id;
         $resource->resource_id = 1;
+        $resource->needs_time = 0;
         $resource->amount = 200;
         $resource->save();
 
-        $resource = new UserResource();
+        $resource = new ProfileResource();
         $resource->user_id = $user->id;
         $resource->resource_id = 2;
+        $resource->needs_time = 0;
         $resource->amount = 2;
         $resource->save();
 
-        $resource = new UserResource();
+        $resource = new ProfileResource();
         $resource->user_id = $user->id;
         $resource->resource_id = 3;
+        $resource->needs_time = 0;
         $resource->amount = 2;
         $resource->save();
 
-        $resource = new UserResource();
+        $resource = new ProfileResource();
         $resource->user_id = $user->id;
         $resource->resource_id = 4;
+        $resource->needs_time = 0;
         $resource->amount = 2;
         $resource->save();
 
-        $resource = new UserResource();
+        $resource = new ProfileResource();
         $resource->user_id = $user->id;
         $resource->resource_id = 5;
+        $resource->needs_time = 0;
         $resource->amount = 2;
         $resource->save();
 
-        /* Сохранение Profile и возврат User */
-        return $profile->save() ? $user : false;
+        return $user;
     }
 
     /**

@@ -2,9 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\ProfileResource;
+use app\models\User;
 use Yii;
 use app\models\Profile;
 use app\models\ProfileSearch;
+use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -75,20 +78,30 @@ class ProfileController extends Controller
     }
 
     /**
-     * Updates an existing Profile model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
+     * @param $id
+     * @return bool|string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $resources = ProfileResource::find()->where(['user_id' => $model->user_id])->all();
+        $user = User::find()->where(['id' => $model->user_id])->one();
+        if (Model::loadMultiple($resources, Yii::$app->request->post())
+            && Model::validateMultiple($resources)
+        ) {
+            foreach ($resources as $item) {
+                $item->save();
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->user_id]);
+            if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post()) && $model->save() && $user->save()) {
+                return $this->redirect(['index']);
+            }
+            return false;
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'user' => $user
             ]);
         }
     }

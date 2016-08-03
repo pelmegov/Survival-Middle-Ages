@@ -1,25 +1,24 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: user2
- * Date: 02.08.2016
- * Time: 13:18
- */
-use yii\db\Schema;
+
 use yii\db\Migration;
-class m400000_000000_resource extends Migration
+use yii\db\Schema;
+
+/**
+ * Handles the creation for table `resource`.
+ */
+class m160803_085410_create_resource_table extends Migration
 {
-    public function safeUp()
+    /**
+     * @inheritdoc
+     */
+    public function up()
     {
-        $this->createTable(
-            'resource',
-            [
-                'resource_id' => Schema::TYPE_PK,
-                'resource_name' => Schema::TYPE_STRING,
-                'needs_time' => Schema::TYPE_INTEGER,
-                'amount' => Schema::TYPE_INTEGER
-            ]
-        );
+        $this->createTable('resource', [
+            'resource_id' => Schema::TYPE_PK,
+            'resource_name' => Schema::TYPE_STRING,
+            'needs_time' => Schema::TYPE_INTEGER,
+            'amount' => Schema::TYPE_INTEGER
+        ]);
 
         $this->insert('{{resource}}', [
             'resource_id' => '1',
@@ -51,13 +50,13 @@ class m400000_000000_resource extends Migration
             'needs_time' => '140',
             'amount' => '8'
         ]);
-
-        $this->addForeignKey('resource', 'user_resource', 'resource_id', 'resource', 'resource_id', 'cascade', 'cascade');
     }
-    public function safeDown()
+
+    /**
+     * @inheritdoc
+     */
+    public function down()
     {
-//        $this->dropForeignKey('profile_user', 'profile');
-//        $this->dropTable('profile');
+        $this->dropTable('resource');
     }
-
 }

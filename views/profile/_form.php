@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Profile */
+/* @var $model app\models\ProfileResource */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -12,19 +13,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model['user'], 'username')->textInput() ?>
 
-    <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model['user'], 'email')->textInput() ?>
 
-    <?= $form->field($model, 'fish')->textInput() ?>
+    <?= $form->field($model['user'], 'status')->textInput() ?>
 
-    <?= $form->field($model, 'animal')->textInput() ?>
+    <?= $form->field($model, 'nickname')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'wood')->textInput() ?>
-
-    <?= $form->field($model, 'stone')->textInput() ?>
-
-    <?= $form->field($model, 'gold')->textInput() ?>
+    <? foreach ($model['profileResources'] as $key => $resource) : ?>
+        <?= $form->field($resource, "[$key]amount")->textInput()->label($resource->resource->resource_name) ?>
+    <? endforeach; ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

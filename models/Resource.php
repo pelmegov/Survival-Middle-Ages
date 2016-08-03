@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "resource".
@@ -13,8 +12,8 @@ use yii\helpers\ArrayHelper;
  * @property integer $needs_time
  * @property integer $amount
  *
- * @property UserResource[] $userResources
- * @property User[] $users
+ * @property ProfileResource[] $profileResources
+ * @property Profile[] $users
  */
 class Resource extends \yii\db\ActiveRecord
 {
@@ -53,9 +52,9 @@ class Resource extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUserResources()
+    public function getProfileResources()
     {
-        return $this->hasMany(UserResource::className(), ['resource_id' => 'resource_id']);
+        return $this->hasMany(ProfileResource::className(), ['resource_id' => 'resource_id']);
     }
 
     /**
@@ -63,6 +62,6 @@ class Resource extends \yii\db\ActiveRecord
      */
     public function getUsers()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_resource', ['resource_id' => 'resource_id']);
+        return $this->hasMany(Profile::className(), ['user_id' => 'user_id'])->viaTable('profile_resource', ['resource_id' => 'resource_id']);
     }
 }
