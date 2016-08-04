@@ -39,7 +39,7 @@ class BehaviorsController extends Controller {
                     /* Для зарегистрированных пользователей */
                     [
                         'controllers' => ['site'],
-                        'actions' => ['logout', 'profile', 'edit_profile'],
+                        'actions' => ['logout', 'profile', 'edit_profile', 'work'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
