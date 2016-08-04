@@ -11,9 +11,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-about">
         <h1><?= Html::encode($this->title) ?> <?= $profile['nickname']; ?></h1>
 
+    <?= Yii::$app->session->getFlash('successProfileUpdate'); ?>
+
     <p class="bg-success" style="padding: 10px">
         Изменить данные:
-        <a href="<?= Url::toRoute(['edit_profile']) ?>">Редактировать профиль</a>
+        <a href="<?= Url::toRoute(['edit-profile']) ?>">Редактировать профиль</a>
     </p>
 
     <h2>Запасы:</h2>

@@ -38,7 +38,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function isUserAdmin($username)
     {
-        if (static::findOne(['username' => $username, 'role' => self::ROLE_ADMIN])){
+        if (static::findOne(['username' => $username, 'role' => self::ROLE_ADMIN])) {
             return true;
         } else {
             return false;

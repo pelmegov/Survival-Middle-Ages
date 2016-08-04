@@ -17,6 +17,7 @@ use Yii;
  */
 class ProfileResource extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */

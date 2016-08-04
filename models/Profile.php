@@ -16,6 +16,7 @@ use Yii;
  */
 class Profile extends \yii\db\ActiveRecord
 {
+
     public static function tableName()
     {
         return 'profile';
@@ -38,15 +39,66 @@ class Profile extends \yii\db\ActiveRecord
     }
 
     /**
+     * Обновление времени, оставшегося до конца работы
+     * @param $profile_resource
+     */
+    public function updateNeedsTime($profile_resource)
+    {
+        $profile_resource->needs_time =
+            number_format($profile_resource->resource->needs_time - (time() - $profile_resource->needs_time) / 60, 2);
+        if ($profile_resource->needs_time <= 0) {
+            $profile_resource->needs_time = 0;
+            $profile_resource->amount += $profile_resource->resource->amount;
+            \Yii::$app->getSession()->setFlash('endWork',
+                '<div class="bg-success" style="padding: 10px;"><h2>Вы закончили работать и получили '
+                . $profile_resource->resource->amount . ' '
+                . $profile_resource->resource->resource_name
+                . '!</h2></div>'
+            );
+        }
+        $profile_resource->save();
+    }
+
+    /**
+     * Найти ресурс по ID, который добывается
+     * @param $id
+     * @return array|bool|null|\yii\db\ActiveRecord
+     */
+    public function findResource($id)
+    {
+        $resource = Resource::find()
+            ->where(['resource_id' => $id])
+            ->andWhere('needs_time>0')
+            ->limit(1)
+            ->one();
+        return $resource ? $resource : false;
+    }
+
+    /**
+     * Проверка работает ли сейчас Юзер
+     * Если юзер не работает, вернет false,
+     * иначе вернет profile_resource
+     * @return array|bool|null|\yii\db\ActiveRecord
+     */
+    public function isWork()
+    {
+        $profile_resource = ProfileResource::find()
+            ->where(['user_id' => Yii::$app->user->id])
+            ->andWhere('needs_time>0')
+            ->limit(1)
+            ->one();
+        return $profile_resource ? $profile_resource : false;
+    }
+
+    /**
      * Обновление никнейма
      * @param $profile
      * @return bool
      */
     public function updateNickname($profile)
     {
-
         $profile_resource = ProfileResource::find()
-            ->where(['user_id'=>Yii::$app->user->id])
+            ->where(['user_id' => Yii::$app->user->id])
             ->andWhere(['resource_id' => 1])
             ->with('resource')
             ->limit(1)
@@ -55,6 +107,10 @@ class Profile extends \yii\db\ActiveRecord
         if ($profile_resource->amount >= 200 && $profile->nickname != $this->nickname) {
             $profile->nickname = $this->nickname;
             $profile_resource->amount -= 200;
+
+            \Yii::$app->getSession()->setFlash('successProfileUpdate',
+                '<div class="bg-success" style="padding: 10px;"><h2>Данные успешно обновлены!</h2></div>'
+            );
 
             $profile_resource->save();
             return true;

@@ -9,9 +9,16 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+
+$this->title = "Работа";
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
+
 <div class="site-about">
+
+
+    <?= Yii::$app->session->getFlash('endWork'); ?>
 
     <? if ($model->needs_time > 0) : ?>
         <h1>Вы уже работаете!</h1>
@@ -26,6 +33,16 @@ use yii\helpers\Url;
         <p class="bg-warning" style="padding: 10px">
             Вам осталось работать : <b><?= $model->needs_time ?> минут</b>
         </p>
+
+        <?
+        if ($model->resource->link_bg_image) :
+            ?>
+
+            <img src="<?=$model->resource->link_bg_image?>" alt="<?=$model->resource->resource_name?>">
+
+            <?
+        endif;
+        ?>
     <? else : ?>
 
         <h1>Вы еще не работаете!</h1>

@@ -14,7 +14,6 @@ $this->title = Yii::$app->name;
                 <div class="col-md-4">
                     <img class="mainimg" src="http://commando.com.ua/uploads/posts/2012-07/1342331264_0076.jpg"
                          alt="<?= Yii::$app->name ?>">
-
                     <h1 class="imgh1"><?= Yii::$app->name ?></h1>
                 </div>
                 <? if ($model) : ?>

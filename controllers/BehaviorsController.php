@@ -14,7 +14,8 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 
-class BehaviorsController extends Controller {
+class BehaviorsController extends Controller
+{
 
     public function behaviors()
     {
@@ -39,7 +40,7 @@ class BehaviorsController extends Controller {
                     /* Для зарегистрированных пользователей */
                     [
                         'controllers' => ['site'],
-                        'actions' => ['logout', 'profile', 'edit_profile', 'work'],
+                        'actions' => ['logout', 'profile', 'edit-profile', 'work'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

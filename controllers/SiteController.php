@@ -36,35 +36,11 @@ class SiteController extends BehaviorsController
     public function actionIndex()
     {
 
-        $model = Profile::find()
-            ->where(['user_id' => Yii::$app->user->id])
-            ->limit(1)
-            ->one();
+        $profile = Profile::findOne(Yii::$app->user->id);
 
-        $flag = false;
-
-        if ($model) {
-
-            foreach ($model->profileResources as $item) {
-                if ($item->needs_time > 0) {
-                    $model = $item;
-
-                    $model->needs_time = number_format($model->resource->needs_time - (time() - $model->needs_time) / 60, 2);
-
-                    if ($model->needs_time <= 0) {
-                        $model->needs_time = 0;
-                        $model->amount += $model->resource->amount;
-                    }
-
-                    $flag = true;
-                    $model->save();
-
-                    break;
-                }
-            }
-        }
-
-        if (!$flag) {
+        if ($profile && $model = $profile->isWork()) {
+            $profile->updateNeedsTime($model);
+        } else {
             $model = false;
         }
 
@@ -178,6 +154,11 @@ class SiteController extends BehaviorsController
         }
 
         $profile = ($profile = Profile::findOne(Yii::$app->user->id)) ? $profile : new Profile();
+
+        if ($model = $profile->isWork()) {
+            $profile->updateNeedsTime($model);
+        }
+
         $model = ProfileResource::find()
             ->where(['user_id' => Yii::$app->user->id])
             ->with(['resource', 'user'])
@@ -193,7 +174,7 @@ class SiteController extends BehaviorsController
     }
 
 
-    public function actionEdit_profile()
+    public function actionEditProfile()
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -212,7 +193,7 @@ class SiteController extends BehaviorsController
         endif;
 
         return $this->render(
-            'edit_profile',
+            'edit-profile',
             [
                 'model' => $model
             ]
@@ -222,53 +203,29 @@ class SiteController extends BehaviorsController
     public function actionWork()
     {
         $request = Yii::$app->request;
-
         $id = (int)$request->get('id');
-
         $want_work = (int)$request->get('yes');
+        $profile = Profile::findOne(Yii::$app->user->id);
+        $model = $profile->isWork();
 
-        $model =
-            Profile::find()
-                ->where(['user_id' => Yii::$app->user->id])
-                ->limit(1)
-                ->one();
+        if ($model) {
+            $profile->updateNeedsTime($model);
+        } else {
+            $resource = $profile->findResource($id);
+            if (!$resource) return $this->goHome();
+            $model =
+                ProfileResource::find()
+                    ->where(['user_id' => Yii::$app->user->id])
+                    ->andWhere(['resource_id' => $resource->resource_id])
+                    ->limit(1)
+                    ->one();
 
-        if (!(count($model->profileResources) >= $id) || $id < 2) return $this->goHome();
-
-        $flag = false;
-        $no_work_model = false;
-
-        foreach ($model->profileResources as $item) {
-            if ($item->needs_time > 0) {
-                $model = $item;
-                $flag = true;
-
-                $model->needs_time = number_format($model->resource->needs_time - (time() - $model->needs_time) / 60, 2);
-
-                if ($model->needs_time <= 0) {
-                    $model->needs_time = 0;
-                    $model->amount += $model->resource->amount;
-                }
-
-                $model->save();
-
-                break;
-            }
-
-            if ($item->resource_id == $id) {
-                $no_work_model = $item;
-            }
-        }
-
-        if (!$flag) {
-            $model = $no_work_model;
-            if ($want_work) {
+            if ($want_work == 1) {
                 $model->needs_time = time();
                 $model->save();
                 return $this->goHome();
             }
         }
-
         return $this->render(
             'work',
             [
