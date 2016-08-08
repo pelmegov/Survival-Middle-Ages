@@ -36,8 +36,8 @@ AppAsset::register($this);
     ]);
 
 
-    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Home'), 'url' => ['/site/index']];
-//    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Contact'), 'url' => ['/site/contact']];
+//    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Home'), 'url' => ['/site/index']];
+    //    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Contact'), 'url' => ['/site/contact']];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = [
             'label' => Yii::t('msg/pages_info', 'Registration'),
@@ -52,6 +52,22 @@ AppAsset::register($this);
             'label' => Yii::t('msg/pages_info', 'Profile'),
             'url' => ['/site/profile']
         ];
+
+        $menuItems[] = [
+            'label' => 'Обмен ресурсов',
+            'url' => ['#'],
+            'items' => [
+                [
+                    'label' => 'Купить ресурсы',
+                    'url' => ['site/market-resources', 'action' => 'buy'],
+                ],
+                [
+                    'label' => 'Продать ресурсы',
+                    'url' => ['site/market-resources', 'action' => 'sell'],
+                ],
+            ]
+        ];
+
 
         if (User::isUserAdmin(Yii::$app->user->identity->username)) {
             $menuItems[] = [

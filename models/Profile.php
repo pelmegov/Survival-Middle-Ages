@@ -39,6 +39,75 @@ class Profile extends \yii\db\ActiveRecord
     }
 
     /**
+     * Покупка ресурсов
+     * @param $id
+     * @param $amount
+     * @return array|bool
+     */
+    public function buy($id, $amount)
+    {
+        $profile = Profile::findOne(Yii::$app->user->id);
+
+        $profile_resource =
+            ProfileResource::find()
+                ->where(["user_id" => $profile->user_id])
+                ->andWhere(["resource_id" => $id])
+                ->andWhere("resource_id>1")
+                ->one();
+
+        $gold = ProfileResource::find()
+            ->where(["user_id" => $profile->user_id])
+            ->andWhere(["resource_id" => 1])
+            ->one();
+
+        $isBuy = $gold->amount >= $amount * $profile_resource->resource->gold_ratio ? true : false;
+
+        if ($isBuy) {
+            $profile_resource->amount += $amount;
+            $gold->amount -= $amount * $profile_resource->resource->gold_ratio;
+            $gold->save();
+            $profile_resource->save();
+        }
+
+        return $profile_resource ? [$profile_resource->amount, $gold->amount] : false;
+
+    }
+
+    /**
+     * Продажа ресурсов
+     * @param $id
+     * @param $amount
+     * @return array|bool
+     */
+    public function sell($id, $amount)
+    {
+        $profile = Profile::findOne(Yii::$app->user->id);
+
+        $profile_resource =
+            ProfileResource::find()
+                ->where(["user_id" => $profile->user_id])
+                ->andWhere(["resource_id" => $id])
+                ->andWhere("resource_id>1")
+                ->one();
+
+        $gold = ProfileResource::find()
+            ->where(["user_id" => $profile->user_id])
+            ->andWhere(["resource_id" => 1])
+            ->one();
+
+        $isBuy = $profile_resource->amount - $amount >= 0 ? true : false;
+
+        if ($isBuy) {
+            $profile_resource->amount -= $amount;
+            $gold->amount += floor((($amount * $profile_resource->resource->gold_ratio) * 0.80));
+            $gold->save();
+            $profile_resource->save();
+        }
+
+        return $profile_resource ? [$profile_resource->amount, $gold->amount] : false;
+    }
+
+    /**
      * Обновление времени, оставшегося до конца работы
      * @param $profile_resource
      */

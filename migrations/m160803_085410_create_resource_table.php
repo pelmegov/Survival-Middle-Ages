@@ -18,6 +18,7 @@ class m160803_085410_create_resource_table extends Migration
             'resource_name' => Schema::TYPE_STRING,
             'needs_time' => Schema::TYPE_INTEGER,
             'amount' => Schema::TYPE_INTEGER,
+            'gold_ratio' => Schema::TYPE_INTEGER,
             'link_bg_image' => Schema::TYPE_STRING,
         ]);
 
@@ -26,6 +27,7 @@ class m160803_085410_create_resource_table extends Migration
             'resource_name' => 'Золото',
             'needs_time' => '0',
             'amount' => '0',
+            'gold_ratio' => '0',
             'link_bg_image' => 'images/default_bg.jpg'
         ]);
         $this->insert('{{resource}}', [
@@ -33,6 +35,7 @@ class m160803_085410_create_resource_table extends Migration
             'resource_name' => 'Дерево',
             'needs_time' => '30',
             'amount' => '2',
+            'gold_ratio' => '20',
             'link_bg_image' => 'images/default_bg.jpg'
         ]);
         $this->insert('{{resource}}', [
@@ -40,6 +43,7 @@ class m160803_085410_create_resource_table extends Migration
             'resource_name' => 'Камень',
             'needs_time' => '45',
             'amount' => '2',
+            'gold_ratio' => '35',
             'link_bg_image' => 'images/default_bg.jpg'
         ]);
         $this->insert('{{resource}}', [
@@ -47,6 +51,7 @@ class m160803_085410_create_resource_table extends Migration
             'resource_name' => 'Шкуры животных',
             'needs_time' => '120',
             'amount' => '2',
+            'gold_ratio' => '50',
             'link_bg_image' => 'images/default_bg.jpg'
         ]);
         $this->insert('{{resource}}', [
@@ -54,6 +59,7 @@ class m160803_085410_create_resource_table extends Migration
             'resource_name' => 'Рыба',
             'needs_time' => '140',
             'amount' => '8',
+            'gold_ratio' => '30',
             'link_bg_image' => 'images/fishing.jpg'
         ]);
     }

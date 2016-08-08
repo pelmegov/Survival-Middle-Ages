@@ -2,10 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\BuyForm;
 use app\models\Profile;
 use app\models\Resource;
 use app\models\ProfileResource;
-use DateTime;
+use app\models\SellForm;
 use Yii;
 use app\models\RegForm;
 use app\models\User;
@@ -198,6 +199,103 @@ class SiteController extends BehaviorsController
                 'model' => $model
             ]
         );
+    }
+
+    public function actionMarketResources()
+    {
+
+        $request = Yii::$app->request;
+        $action = $request->get('action');
+
+        $profile = Profile::findOne(Yii::$app->user->id);
+
+        if ($action == "buy") {
+            $model = new BuyForm();
+        } else if ($action == "sell") {
+            $model = new SellForm();
+        } else {
+            return $this->actionProfile();
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            if ($action == "buy") {
+                $profile->buy($model->id, $model->amount);
+            }
+            if ($action == "sell") {
+                $profile->sell($model->id, $model->amount);
+            }
+            return $this->render('market-resources', [
+                'model' => $model,
+                'action' => $action
+            ]);
+        } else {
+            // либо страница отображается первый раз, либо есть ошибка в данных
+            return $this->render('market-resources', [
+                'model' => $model,
+                'action' => $action
+            ]);
+        }
+
+    }
+
+    public function actionGetCol()
+    {
+        $prod_id = Yii::$app->request->post('id');
+
+        $profile_resource = ProfileResource::find()
+            ->where(["user_id" => Yii::$app->user->id])
+            ->andWhere(["resource_id" => $prod_id])
+            ->one();
+
+        $gold_ratio = $profile_resource->resource->gold_ratio;
+
+        $gold = ProfileResource::find()
+            ->where(["user_id" => Yii::$app->user->id])
+            ->andWhere(["resource_id" => 1])
+            ->one();
+
+        $isBuy = $gold->amount >= $gold_ratio;
+
+        if ($isBuy) {
+            return floor($gold->amount / $gold_ratio);
+        }
+        return 0;
+    }
+
+    public function actionGetCost()
+    {
+        $id = Yii::$app->request->post('id');
+
+        $model = ProfileResource::find()
+            ->where(["user_id" => Yii::$app->user->id])
+            ->andWhere(["resource_id" => $id])
+            ->one();
+
+        return $model->amount;
+    }
+
+    public function actionGetSum()
+    {
+        $prod_id = Yii::$app->request->post('prod_id');
+        $col = Yii::$app->request->post('col');
+
+        if ($col < 0) return 0;
+
+        $profile_resource = ProfileResource::find()
+            ->where(["user_id" => Yii::$app->user->id])
+            ->andWhere(["resource_id" => $prod_id])
+            ->one();
+
+        $gold_ratio = $profile_resource->resource->gold_ratio;
+
+        $isBuy = $profile_resource->amount - $col >= 0 ? true : false;
+
+        if ($isBuy) {
+            $result = floor((($col * $gold_ratio) * 0.80));
+        }
+
+        return $result;
     }
 
     public function actionWork()
