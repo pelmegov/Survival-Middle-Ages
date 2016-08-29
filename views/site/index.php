@@ -7,8 +7,8 @@ use yii\helpers\Url;
 $this->title = Yii::$app->name;
 ?>
 <div class="site-index">
-    <section class="gg-main">
 
+    <section class="gg-main">
         <? if (!Yii::$app->user->isGuest) : ?>
             <div class="row">
                 <div class="col-md-4">
@@ -16,6 +16,7 @@ $this->title = Yii::$app->name;
                          alt="<?= Yii::$app->name ?>">
                     <h1 class="imgh1"><?= Yii::$app->name ?></h1>
                 </div>
+
                 <? if ($model) : ?>
                     <div class="col-md-8 work">
                         <h2>Тебе еще работать: <span>

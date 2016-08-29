@@ -36,8 +36,12 @@ class SiteController extends BehaviorsController
 
     public function actionIndex()
     {
+        $profile = ($profile = Profile::findOne(Yii::$app->user->id)) ? $profile : new Profile();
 
-        $profile = Profile::findOne(Yii::$app->user->id);
+//        $model = ProfileResource::find()
+//            ->where(['user_id' => Yii::$app->user->id])
+//            ->with(['resource', 'user'])
+//            ->all();
 
         if ($profile && $model = $profile->isWork()) {
             $profile->updateNeedsTime($model);
@@ -174,7 +178,6 @@ class SiteController extends BehaviorsController
         );
     }
 
-
     public function actionEditProfile()
     {
         if (Yii::$app->user->isGuest) {
@@ -230,7 +233,6 @@ class SiteController extends BehaviorsController
                 'action' => $action
             ]);
         } else {
-            // либо страница отображается первый раз, либо есть ошибка в данных
             return $this->render('market-resources', [
                 'model' => $model,
                 'action' => $action
@@ -243,17 +245,17 @@ class SiteController extends BehaviorsController
     {
         $prod_id = Yii::$app->request->post('id');
 
-        $profile_resource = ProfileResource::find()
-            ->where(["user_id" => Yii::$app->user->id])
-            ->andWhere(["resource_id" => $prod_id])
-            ->one();
+        $profile_resource = ProfileResource::findOne([
+            "user_id" => Yii::$app->user->id,
+            "resource_id" => $prod_id
+        ]);
 
         $gold_ratio = $profile_resource->resource->gold_ratio;
 
-        $gold = ProfileResource::find()
-            ->where(["user_id" => Yii::$app->user->id])
-            ->andWhere(["resource_id" => 1])
-            ->one();
+        $gold = ProfileResource::findOne([
+            "user_id" => Yii::$app->user->id,
+            "resource_id" => 1
+        ]);
 
         $isBuy = $gold->amount >= $gold_ratio;
 
@@ -267,10 +269,10 @@ class SiteController extends BehaviorsController
     {
         $id = Yii::$app->request->post('id');
 
-        $model = ProfileResource::find()
-            ->where(["user_id" => Yii::$app->user->id])
-            ->andWhere(["resource_id" => $id])
-            ->one();
+        $model = ProfileResource::findOne([
+            "user_id" => Yii::$app->user->id,
+            "resource_id" => $id
+        ]);
 
         return $model->amount;
     }
@@ -282,10 +284,10 @@ class SiteController extends BehaviorsController
 
         if ($col < 0) return 0;
 
-        $profile_resource = ProfileResource::find()
-            ->where(["user_id" => Yii::$app->user->id])
-            ->andWhere(["resource_id" => $prod_id])
-            ->one();
+        $profile_resource = ProfileResource::findOne([
+            "user_id" => Yii::$app->user->id,
+            "resource_id" => $prod_id
+        ]);
 
         $gold_ratio = $profile_resource->resource->gold_ratio;
 
@@ -311,12 +313,11 @@ class SiteController extends BehaviorsController
         } else {
             $resource = $profile->findResource($id);
             if (!$resource) return $this->goHome();
-            $model =
-                ProfileResource::find()
-                    ->where(['user_id' => Yii::$app->user->id])
-                    ->andWhere(['resource_id' => $resource->resource_id])
-                    ->limit(1)
-                    ->one();
+
+            $model = ProfileResource::findOne([
+                'user_id' => Yii::$app->user->id,
+                'resource_id' => $resource->resource_id
+            ]);
 
             if ($want_work == 1) {
                 $model->needs_time = time();

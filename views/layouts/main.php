@@ -54,15 +54,15 @@ AppAsset::register($this);
         ];
 
         $menuItems[] = [
-            'label' => 'Обмен ресурсов',
+            'label' => Yii::t('msg/pages_info', 'Resource Market'),
             'url' => ['#'],
             'items' => [
                 [
-                    'label' => 'Купить ресурсы',
+                    'label' => Yii::t('msg/pages_info', 'Buy Resources'),
                     'url' => ['site/market-resources', 'action' => 'buy'],
                 ],
                 [
-                    'label' => 'Продать ресурсы',
+                    'label' => Yii::t('msg/pages_info', 'Sell Resources'),
                     'url' => ['site/market-resources', 'action' => 'sell'],
                 ],
             ]
@@ -108,7 +108,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?=Yii::$app->name?> <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

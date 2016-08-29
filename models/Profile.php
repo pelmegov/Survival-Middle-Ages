@@ -48,17 +48,18 @@ class Profile extends \yii\db\ActiveRecord
     {
         $profile = Profile::findOne(Yii::$app->user->id);
 
-        $profile_resource =
-            ProfileResource::find()
-                ->where(["user_id" => $profile->user_id])
-                ->andWhere(["resource_id" => $id])
-                ->andWhere("resource_id>1")
-                ->one();
-
-        $gold = ProfileResource::find()
-            ->where(["user_id" => $profile->user_id])
-            ->andWhere(["resource_id" => 1])
+        $profile_resource = ProfileResource::find()
+            ->where([
+                "user_id" => $profile->user_id,
+                "resource_id" => $id,
+            ])
+            ->andWhere("resource_id>1")
             ->one();
+
+        $gold = ProfileResource::findOne([
+            "user_id" => $profile->user_id,
+            "resource_id" => 1
+        ]);
 
         $isBuy = $gold->amount >= $amount * $profile_resource->resource->gold_ratio ? true : false;
 
@@ -70,7 +71,6 @@ class Profile extends \yii\db\ActiveRecord
         }
 
         return $profile_resource ? [$profile_resource->amount, $gold->amount] : false;
-
     }
 
     /**
@@ -83,17 +83,18 @@ class Profile extends \yii\db\ActiveRecord
     {
         $profile = Profile::findOne(Yii::$app->user->id);
 
-        $profile_resource =
-            ProfileResource::find()
-                ->where(["user_id" => $profile->user_id])
-                ->andWhere(["resource_id" => $id])
-                ->andWhere("resource_id>1")
-                ->one();
-
-        $gold = ProfileResource::find()
-            ->where(["user_id" => $profile->user_id])
-            ->andWhere(["resource_id" => 1])
+        $profile_resource = ProfileResource::find()
+            ->where([
+                "user_id" => $profile->user_id,
+                "resource_id" => $id,
+            ])
+            ->andWhere("resource_id>1")
             ->one();
+
+        $gold = ProfileResource::findOne([
+            "user_id" => $profile->user_id,
+            "resource_id" => 1
+        ]);
 
         $isBuy = $profile_resource->amount - $amount >= 0 ? true : false;
 
@@ -110,9 +111,13 @@ class Profile extends \yii\db\ActiveRecord
     /**
      * Обновление времени, оставшегося до конца работы
      * @param $profile_resource
+     * @return bool
      */
     public function updateNeedsTime($profile_resource)
     {
+
+        if (!$profile_resource) return false;
+
         $profile_resource->needs_time =
             number_format($profile_resource->resource->needs_time - (time() - $profile_resource->needs_time) / 60, 2);
         if ($profile_resource->needs_time <= 0) {
@@ -138,7 +143,6 @@ class Profile extends \yii\db\ActiveRecord
         $resource = Resource::find()
             ->where(['resource_id' => $id])
             ->andWhere('needs_time>0')
-            ->limit(1)
             ->one();
         return $resource ? $resource : false;
     }

@@ -12,7 +12,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 
-$this->title = "Рынок Ресурсов";
+$this->title = Yii::t('msg/pages_info', 'Resource Market');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -32,34 +32,28 @@ $this->params['breadcrumbs'][] = $this->title;
                         ->andWhere(["profile_resource.user_id" => Yii::$app->user->id])
                         ->andWhere("profile_resource.amount>0")
                         ->all();
-//        echo "<pre>";
-//        print_r($resources);
-//        echo "</pre>";
 
                 $js = new \yii\web\JsExpression("
-          var url='" . Url::to(['/site/get-cost']) . "';
-          $(document).on('change','#sellform-id',function(){
-             var id = $(this).val();
-                $.post(url,{id:id},function(data){
-                      if(data){
-                          $('#you_have').text(data);
-                      }
-                });
+                    var url='" . Url::to(['/site/get-cost']) . "';
+                    $(document).on('change','#sellform-id',function(){
+                        var id = $(this).val();
+                        $.post(url,{id:id},function(data){
+                            if(data){
+                                $('#you_have').text(data);
+                            }
+                        });
 
-                var url2='" . Url::to(['/site/get-sum']) . "';
-                var col= $('#sellform-amount').val();
-                var prod_id = $('#sellform-id').val();
+                        var url2='" . Url::to(['/site/get-sum']) . "';
+                        var col= $('#sellform-amount').val();
+                        var prod_id = $('#sellform-id').val();
 
-                console.log('col='+col);
-                console.log('prod_id='+prod_id);
-
-                $.post(url2,{col:col, prod_id:prod_id},function(data){
-                      if(data){
-                          $('#cost-sum').text(data);
-                      }
-                });
-
-          })");
+                        $.post(url2,{col:col, prod_id:prod_id},function(data){
+                            if(data){
+                                $('#cost-sum').text(data);
+                            }
+                        });
+                    })"
+                );
                 $this->registerJs($js);
                 ?>
 
@@ -70,33 +64,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 ];
                 echo $form->field($model, 'id')->dropDownList($items, $params); ?>
 
-                <?= $form->field($model, 'amount')->textInput(
-                    [
-                        'onchange' => new \yii\web\JsExpression("
-                    (function(){
-                        var url='" . Url::to(['/site/get-sum']) . "';
-                        var col= $('#sellform-amount').val();
-                        var prod_id = $('#sellform-id').val();
+                <?= $form->field($model, 'amount')->textInput([
+                    'onchange' => new \yii\web\JsExpression("
+                        (function(){
+                            var url='" . Url::to(['/site/get-sum']) . "';
+                            var col= $('#sellform-amount').val();
+                            var prod_id = $('#sellform-id').val();
 
-                        console.log('col='+col);
-                        console.log('prod_id='+prod_id);
+                            $.post(url,{col:col, prod_id:prod_id},function(data){
+                                if(data){
+                                    $('#cost-sum').text(data);
+                                }
+                            });
 
-                        $.post(url,{col:col, prod_id:prod_id},function(data){
-                              if(data){
-                                  $('#cost-sum').text(data);
-                              }
-                        });
-
-                        var url2='" . Url::to(['/site/get-cost']) . "';
-                        var id = $('#sellform-id').val();
-                        $.post(url2,{id:id},function(data){
-                              if(data){
-                                  $('#you_have').text(data);
-                              }
-                        });
-
-                    })(this);"
-                        )]) ?>
+                            var url2='" . Url::to(['/site/get-cost']) . "';
+                            var id = $('#sellform-id').val();
+                            $.post(url2,{id:id},function(data){
+                                if(data){
+                                    $('#you_have').text(data);
+                                }
+                            });
+                        })(this);"
+                    )]) ?>
 
                 <h4>За продажу вы получите: <span id="cost-sum">0</span> золота.</h4>
                 <h5>(Комиссия 20%)</h5>
@@ -104,7 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                 <div class="form-group">
-                    <?= Html::submitButton('Продать', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton(Yii::t('msg/pages_info', 'Sell Resources'), ['class' => 'btn btn-primary']) ?>
                 </div>
 
                 <?php ActiveForm::end(); ?>
@@ -121,19 +110,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php $form = ActiveForm::begin(); ?>
 
-                <?
-
-                $js = new \yii\web\JsExpression("
-          var url='" . Url::to(['/site/get-col']) . "';
-          $(document).on('change','#buyform-id',function(){
-             var id = $(this).val();
-                $.post(url,{id:id},function(data){
-                      if(data){
-                          $('#you_have').text(data);
-                      }
-                });
-
-          })");
+                <? $js = new \yii\web\JsExpression("
+                    var url='" . Url::to(['/site/get-col']) . "';
+                    $(document).on('change','#buyform-id',function(){
+                        var id = $(this).val();
+                        $.post(url,{id:id},function(data){
+                            if(data){
+                                $('#you_have').text(data);
+                            }
+                        });
+                    })"
+                );
                 $this->registerJs($js);
                 ?>
 
@@ -150,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h4>Ты сможешь купить <span id="you_have">0</span> этого ресурса.</h4>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Купить', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton(Yii::t('msg/pages_info', 'Buy Resources'), ['class' => 'btn btn-primary']) ?>
                 </div>
 
                 <?php ActiveForm::end(); ?>

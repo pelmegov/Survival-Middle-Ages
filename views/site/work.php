@@ -34,15 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
             Вам осталось работать : <b><?= $model->needs_time ?> минут</b>
         </p>
 
-        <?
-        if ($model->resource->link_bg_image) :
-            ?>
+        <? if ($model->resource->link_bg_image) : ?>
 
-            <img src="<?=$model->resource->link_bg_image?>" alt="<?=$model->resource->resource_name?>">
+            <img src="<?= $model->resource->link_bg_image ?>" alt="<?= $model->resource->resource_name ?>">
 
-            <?
-        endif;
-        ?>
+        <? endif; ?>
+
     <? else : ?>
 
         <h1>Вы еще не работаете!</h1>
@@ -50,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             Готовы к работе? Приступаем?
         </p>
         <p class="bg-info" style="padding: 10px">
-            Вы хотитие добывать : <b><?= $model->resource->resource_name ?></b>
+            Вы хотите добывать : <b><?= $model->resource->resource_name ?></b>
         </p>
         <p class="bg-info" style="padding: 10px">
             Вы будете работать : <b><?= $model->resource->needs_time ?> минут</b>

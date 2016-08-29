@@ -87,35 +87,35 @@ class RegForm extends Model
         $resource->user_id = $user->id;
         $resource->resource_id = 1;
         $resource->needs_time = 0;
-        $resource->amount = 200;
+        $resource->amount = Yii::$app->params['defaultGoldAmount'];
         $resource->save();
 
         $resource = new ProfileResource();
         $resource->user_id = $user->id;
         $resource->resource_id = 2;
         $resource->needs_time = 0;
-        $resource->amount = 2;
+        $resource->amount = Yii::$app->params['defaultWoodAmount'];
         $resource->save();
 
         $resource = new ProfileResource();
         $resource->user_id = $user->id;
         $resource->resource_id = 3;
         $resource->needs_time = 0;
-        $resource->amount = 2;
+        $resource->amount = Yii::$app->params['defaultStoneAmount'];
         $resource->save();
 
         $resource = new ProfileResource();
         $resource->user_id = $user->id;
         $resource->resource_id = 4;
         $resource->needs_time = 0;
-        $resource->amount = 2;
+        $resource->amount = Yii::$app->params['defaultAnimalSkinsAmount'];
         $resource->save();
 
         $resource = new ProfileResource();
         $resource->user_id = $user->id;
         $resource->resource_id = 5;
         $resource->needs_time = 0;
-        $resource->amount = 2;
+        $resource->amount = Yii::$app->params['defaultFishAmount'];
         $resource->save();
 
         return $user;

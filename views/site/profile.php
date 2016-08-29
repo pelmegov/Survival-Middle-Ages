@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $profile */
+/* @var $house */
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -17,18 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
         Изменить данные:
         <a href="<?= Url::toRoute(['edit-profile']) ?>">Редактировать профиль</a>
     </p>
-
-    <h2>Обмен ресурсов:</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <table class="table">
-                <tr>
-                    <td><a href="<?= Url::to(['site/market-resources', 'action' => 'buy']) ?>">Купить ресурсы</a></td>
-                    <td><a href="<?= Url::to(['site/market-resources', 'action' => 'sell']) ?>">Продать ресурсы</a></td>
-                </tr>
-            </table>
-        </div>
-    </div>
 
     <h2>Запасы:</h2>
     <ul>

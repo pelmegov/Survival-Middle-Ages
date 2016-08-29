@@ -20,7 +20,7 @@ class m160803_085018_create_profile_table extends Migration
 
         $this->insert('{{profile}}', [
             'user_id' => '1',
-            'nickname' => 'ADMINISTRATOR',
+            'nickname' => 'ADMINISTRATOR'
         ]);
 
         $this->addForeignKey('profile_user', 'profile', 'user_id', 'user', 'id', 'cascade', 'cascade');

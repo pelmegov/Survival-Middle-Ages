@@ -33,7 +33,7 @@ class m160803_085410_create_resource_table extends Migration
         $this->insert('{{resource}}', [
             'resource_id' => '2',
             'resource_name' => 'Дерево',
-            'needs_time' => '30',
+            'needs_time' => '1',
             'amount' => '2',
             'gold_ratio' => '20',
             'link_bg_image' => 'images/default_bg.jpg'
@@ -41,7 +41,7 @@ class m160803_085410_create_resource_table extends Migration
         $this->insert('{{resource}}', [
             'resource_id' => '3',
             'resource_name' => 'Камень',
-            'needs_time' => '45',
+            'needs_time' => '1',
             'amount' => '2',
             'gold_ratio' => '35',
             'link_bg_image' => 'images/default_bg.jpg'
@@ -49,7 +49,7 @@ class m160803_085410_create_resource_table extends Migration
         $this->insert('{{resource}}', [
             'resource_id' => '4',
             'resource_name' => 'Шкуры животных',
-            'needs_time' => '120',
+            'needs_time' => '1',
             'amount' => '2',
             'gold_ratio' => '50',
             'link_bg_image' => 'images/default_bg.jpg'
@@ -57,7 +57,7 @@ class m160803_085410_create_resource_table extends Migration
         $this->insert('{{resource}}', [
             'resource_id' => '5',
             'resource_name' => 'Рыба',
-            'needs_time' => '140',
+            'needs_time' => '1',
             'amount' => '8',
             'gold_ratio' => '30',
             'link_bg_image' => 'images/fishing.jpg'
