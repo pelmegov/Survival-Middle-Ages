@@ -98,7 +98,20 @@ a.desc:after {
 .gg-main .work {
     font-weight: bold;
     text-align: left;
-    line-height: 100px;
+    background: #797983;
+    border: 2px solid #2B2724;
+    min-height: 260px;
+    padding-left: 45px;
+    padding-top: 45px;
+}
+
+.gg-main .work a {
+    color: #fff;
+}
+
+.gg-main .work a:hover {
+    color: #ccc;
+    text-decoration: none;
 }
 
 .gg-main .work span {
@@ -120,11 +133,23 @@ a.desc:after {
 }
 
 .gg-main .no-work ul {
-    background: #eee;
-    border: 2px solid #bbb;
+    background: #797983;
+    border: 2px solid #2B2724;
+    min-height: 260px;
+    padding-top: 14px;
+}
+
+.gg-main .no-work ul a {
+    color: #fff;
+}
+
+.gg-main .no-work ul a:hover {
+    color: #ccc;
+    text-decoration: none;
 }
 
 .gg-main .no-work ul li {
-    display: inline-block;
+    display: block;
     padding: 10px;
+    text-align: left;
 }

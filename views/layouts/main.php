@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\models\User;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -35,8 +36,8 @@ AppAsset::register($this);
     ]);
 
 
-    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Home'), 'url' => ['/site/index']];
-    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Contact'), 'url' => ['/site/contact']];
+//    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Home'), 'url' => ['/site/index']];
+    //    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Contact'), 'url' => ['/site/contact']];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = [
             'label' => Yii::t('msg/pages_info', 'Registration'),
@@ -51,6 +52,30 @@ AppAsset::register($this);
             'label' => Yii::t('msg/pages_info', 'Profile'),
             'url' => ['/site/profile']
         ];
+
+        $menuItems[] = [
+            'label' => Yii::t('msg/pages_info', 'Resource Market'),
+            'url' => ['#'],
+            'items' => [
+                [
+                    'label' => Yii::t('msg/pages_info', 'Buy Resources'),
+                    'url' => ['site/market-resources', 'action' => 'buy'],
+                ],
+                [
+                    'label' => Yii::t('msg/pages_info', 'Sell Resources'),
+                    'url' => ['site/market-resources', 'action' => 'sell'],
+                ],
+            ]
+        ];
+
+
+        if (User::isUserAdmin(Yii::$app->user->identity->username)) {
+            $menuItems[] = [
+                'label' => Yii::t('msg/pages_info', 'User Admin'),
+                'url' => ['/profile/index']
+            ];
+        }
+
         $menuItems[] = [
             'label' => Yii::t('msg/pages_info', 'Logout') . ' (' . Yii::$app->user->identity->username . ')',
             'url' => ['/site/logout'],
@@ -83,7 +108,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?=Yii::$app->name?> <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

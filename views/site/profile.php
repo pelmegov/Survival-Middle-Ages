@@ -1,21 +1,29 @@
 <?php
 
 /* @var $this yii\web\View */
-
+/* @var $profile */
+/* @var $house */
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = Yii::t('msg/pages_info', 'Profile');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?> <?= $profile['nickname']; ?></h1>
 
-    <h2>Твои запасы:</h2>
+    <?= Yii::$app->session->getFlash('successProfileUpdate'); ?>
+
+    <p class="bg-success" style="padding: 10px">
+        Изменить данные:
+        <a href="<?= Url::toRoute(['edit-profile']) ?>">Редактировать профиль</a>
+    </p>
+
+    <h2>Запасы:</h2>
     <ul>
-        <li>Рыбы - 4</li>
-        <li>Шкур животных - 5</li>
-        <li>Древесины - 15</li>
-        <li>Камня - 30</li>
+        <? foreach ($model as $item) : ?>
+            <li><?= $item['resource']['resource_name'] ?> : <?= $item['amount'] ?> ед.</li>
+        <? endforeach; ?>
     </ul>
 
 </div>

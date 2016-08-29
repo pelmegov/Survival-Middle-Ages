@@ -41,11 +41,11 @@ $config = [
         ],
         'db' => require(__DIR__ . '/db-dev.php'),
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'suffix' => '.jsp',
+            'enablePrettyUrl' => false,
+            'showScriptName' => true,
+//            'suffix' => '.jsp',
             'rules' => [
-                '<controller>/<action>' => '<controller>/<action>',
+//                '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
         'i18n' => [
