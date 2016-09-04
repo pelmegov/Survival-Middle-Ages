@@ -35,9 +35,7 @@ AppAsset::register($this);
         ],
     ]);
 
-
-//    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Home'), 'url' => ['/site/index']];
-    //    $menuItems[] = ['label' => Yii::t('msg/pages_info', 'Contact'), 'url' => ['/site/contact']];
+    // Если гость!
     if (Yii::$app->user->isGuest) {
         $menuItems[] = [
             'label' => Yii::t('msg/pages_info', 'Registration'),
@@ -47,6 +45,7 @@ AppAsset::register($this);
             'label' => Yii::t('msg/pages_info', 'Login'),
             'url' => ['/site/login']
         ];
+        // Если пользователь!
     } else {
         $menuItems[] = [
             'label' => Yii::t('msg/pages_info', 'Profile'),
@@ -68,11 +67,22 @@ AppAsset::register($this);
             ]
         ];
 
-
+        // Если администратор!
         if (User::isUserAdmin(Yii::$app->user->identity->username)) {
+
             $menuItems[] = [
-                'label' => Yii::t('msg/pages_info', 'User Admin'),
-                'url' => ['/profile/index']
+                'label' => Yii::t('msg/pages_info', 'Admin Panel'),
+                'url' => ['#'],
+                'items' => [
+                    [
+                        'label' => Yii::t('msg/pages_info', 'Task Tracker'),
+                        'url' => ['/task-tracker/index']
+                    ],
+                    [
+                        'label' => Yii::t('msg/pages_info', 'User Admin'),
+                        'url' => ['/profile/index']
+                    ],
+                ]
             ];
         }
 
@@ -108,7 +118,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?=Yii::$app->name?> <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?= Yii::$app->name ?> <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

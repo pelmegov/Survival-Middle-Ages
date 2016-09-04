@@ -12,6 +12,8 @@ return [
     'Site Name' => 'Имя сайта',
     'Home' => 'Главная',
     'Resource Market' => 'Рынок Ресурсов',
+    'Task Tracker' => 'Трекер Задач',
+    'Admin Panel' => 'Админка',
     'Buy Resources' => 'Купить ресурсы',
     'Sell Resources' => 'Продать ресурсы',
     'Profile' => 'Профиль игрока',

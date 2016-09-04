@@ -50,7 +50,7 @@ class BehaviorsController extends Controller
                     /* Для администраторов */
                     [
                         'allow' => true,
-                        'controllers' => ['site', 'profile'],
+                        'controllers' => ['site', 'profile', 'task-tracker'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
                             return User::isUserAdmin(Yii::$app->user->identity->username);
