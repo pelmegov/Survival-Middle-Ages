@@ -35,9 +35,11 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
 
         <? if ($model->resource->link_bg_image) : ?>
-
-            <img src="<?= $model->resource->link_bg_image ?>" alt="<?= $model->resource->resource_name ?>">
-
+            <div class="row">
+                <div class="col-md-12">
+                    <img style="width: 100%" src="<?= $model->resource->link_bg_image ?>" alt="<?= $model->resource->resource_name ?>">
+                </div>
+            </div>
         <? endif; ?>
 
     <? else : ?>

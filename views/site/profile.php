@@ -20,10 +20,18 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <h2>Запасы:</h2>
-    <ul>
-        <? foreach ($model as $item) : ?>
-            <li><?= $item['resource']['resource_name'] ?> : <?= $item['amount'] ?> ед.</li>
-        <? endforeach; ?>
-    </ul>
 
+    <div class="col-md-6">
+    <table class="table">
+        <? foreach ($model as $item) : ?>
+            <tr>
+                <td><img style="width: 100px" src="<?= $item['resource']['link_image'] ?>"
+                                              alt="<?= $item['resource']['resource_name'] ?>"></td>
+                <td><?= $item['resource']['resource_name'] ?></td>
+                <td><?= $item['amount'] ?> ед.</td>
+            </tr>
+        <? endforeach; ?>
+
+    </table>
+    </div>
 </div>
