@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Profile;
+use app\models\User;
 use Yii;
 use app\models\TaskTracker;
 use app\models\TaskTrackerSearch;
@@ -21,10 +23,17 @@ class TaskTrackerController extends BehaviorsController
      */
     public function actionIndex()
     {
+        $administrators = "";
+        $admins = User::find()->where(["role" => "20"])->all();
+
+        foreach ($admins as $admin) {
+            $administrators[] = Profile::findOne(["user_id" => $admin->id]);
+        }
         $searchModel = new TaskTrackerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'admins' => $administrators,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -37,7 +46,15 @@ class TaskTrackerController extends BehaviorsController
      */
     public function actionView($id)
     {
+        $administrators = "";
+        $admins = User::find()->where(["role" => "20"])->all();
+
+        foreach ($admins as $admin) {
+            $administrators[] = Profile::findOne(["user_id" => $admin->id]);
+        }
+
         return $this->render('view', [
+            'admins' => $administrators,
             'model' => $this->findModel($id),
         ]);
     }

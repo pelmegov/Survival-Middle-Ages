@@ -19,6 +19,7 @@ class m160904_105524_create_task_tracker_table extends Migration
             'title' => Schema::TYPE_STRING . ' NOT NULL',
             'text' => Schema::TYPE_TEXT,
             'status' => Schema::TYPE_INTEGER,
+            'responsible' => Schema::TYPE_INTEGER,
             'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
         ]);
 
@@ -28,6 +29,7 @@ class m160904_105524_create_task_tracker_table extends Migration
             'title' => "Таск #1",
             'text' => "Тест таска №1.",
             'status' => 1,
+            'responsible' => 1,
             'created_at' => time(),
         ]);
 

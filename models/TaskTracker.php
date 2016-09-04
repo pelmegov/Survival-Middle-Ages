@@ -32,7 +32,7 @@ class TaskTracker extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['profile_id', 'status', 'created_at'], 'integer'],
+            [['profile_id', 'status', 'responsible', 'created_at'], 'integer'],
             [['title', 'created_at'], 'required'],
             [['text'], 'string'],
             [['title'], 'string', 'max' => 255],
@@ -47,11 +47,12 @@ class TaskTracker extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'profile_id' => 'Profile ID',
-            'title' => 'Title',
-            'text' => 'Text',
-            'status' => 'Status',
-            'created_at' => 'Created At',
+            'profile_id' => 'Ид пользователя',
+            'responsible' => 'Ответственный',
+            'title' => 'Заголовок',
+            'text' => 'Текст',
+            'status' => 'Статус',
+            'created_at' => 'Дата создания',
         ];
     }
 

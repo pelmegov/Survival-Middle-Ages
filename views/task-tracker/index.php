@@ -1,9 +1,12 @@
 <?php
 
+use app\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
+/* @var $admins */
 /* @var $searchModel app\models\TaskTrackerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -16,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Task Tracker', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создание задачи', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -24,12 +27,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'id',
             'profile.nickname',
+            [
+                'attribute' => 'responsible',
+                'value' => function ($model) use ($admins) {
+
+                    foreach ($admins as $admin) {
+                        if ($model->responsible == $admin->user_id) {
+                            return $admin->nickname;
+                        }
+                    }
+
+                    return "Неизвестный юзер";
+                },
+            ],
             'title',
-            'text:ntext',
+            [
+                'attribute' => 'text',
+                'value' => function ($model) {
+                    return StringHelper::truncate($model->text, 100);
+                }
+            ],
             [
                 'attribute' => 'status',
                 'filter' => [
-                    "" => "Все задачи",
                     "1" => "Задача открыта",
                     "2" => "Задача на выполнении",
                     "3" => "Задача закрыта",

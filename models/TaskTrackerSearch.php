@@ -18,7 +18,7 @@ class TaskTrackerSearch extends TaskTracker
     public function rules()
     {
         return [
-            [['id', 'profile_id', 'status', 'created_at'], 'integer'],
+            [['id', 'profile_id', 'status', 'created_at', 'responsible'], 'integer'],
             [['title', 'text'], 'safe'],
         ];
     }
