@@ -18,7 +18,8 @@
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "lajax/yii2-language-picker": "1.*"
+        "lajax/yii2-language-picker": "1.*",
+        "sintret/yii2-chat-adminlte": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

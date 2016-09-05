@@ -66,7 +66,7 @@ class m160803_085410_create_resource_table extends Migration
             'amount' => '8',
             'gold_ratio' => '30',
             'link_bg_image' => 'images/fishing.jpg',
-            'link_image' => 'images/res/default.png',
+            'link_image' => 'images/res/fish.png',
         ]);
     }
 

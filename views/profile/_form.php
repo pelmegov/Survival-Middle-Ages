@@ -21,6 +21,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nickname')->textInput(['maxlength' => true]) ?>
 
+<!--    --><?//= $form->field($model, 'avatar_id')->textInput(['maxlength' => true]) ?>
+
     <? foreach ($model['profileResources'] as $key => $resource) : ?>
         <?= $form->field($resource, "[$key]amount")->textInput()->label($resource->resource->resource_name) ?>
     <? endforeach; ?>

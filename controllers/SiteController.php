@@ -34,6 +34,12 @@ class SiteController extends BehaviorsController
         ];
     }
 
+    public function actionSendChat() {
+        if (!empty($_POST)) {
+            echo \sintret\chat\ChatRoom::sendChat($_POST);
+        }
+    }
+
     public function actionIndex()
     {
         $profile = ($profile = Profile::findOne(Yii::$app->user->id)) ? $profile : new Profile();

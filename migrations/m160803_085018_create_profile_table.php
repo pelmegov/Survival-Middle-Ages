@@ -15,12 +15,14 @@ class m160803_085018_create_profile_table extends Migration
     {
         $this->createTable('profile', [
             'user_id' => Schema::TYPE_PK,
-            'nickname' => Schema::TYPE_STRING.'(32)'
+            'avatar_id' => Schema::TYPE_INTEGER . '(11) NOT NULL DEFAULT 1',
+            'nickname' => Schema::TYPE_STRING . '(32)',
         ]);
 
         $this->insert('{{profile}}', [
             'user_id' => '1',
-            'nickname' => 'ADMINISTRATOR'
+            'avatar_id' => '2',
+            'nickname' => 'ADMINISTRATOR',
         ]);
 
         $this->addForeignKey('profile_user', 'profile', 'user_id', 'user', 'id', 'cascade', 'cascade');

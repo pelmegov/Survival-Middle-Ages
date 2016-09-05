@@ -104,18 +104,22 @@ a.desc:after {
     font-size: 24px;
 }
 
-.gg-main .work {
+.gg-main .work>div {
     font-weight: bold;
-    text-align: left;
-    background: #797983;
     border: 2px solid #2B2724;
     min-height: 260px;
-    padding-left: 45px;
-    padding-top: 45px;
+    text-align: left;
+    padding-left: 35px;
+    padding-top: 25px;
+    background: #797983 url('../images/bg-sword.png') 0 0 no-repeat;
+}
+
+.gg-main .work {
+    color: #fff;
 }
 
 .gg-main .work a {
-    color: #fff;
+    text-shadow: 2px 1px 3px rgba(0,0,0,0.5) !important;
 }
 
 .gg-main .work a:hover {
@@ -127,22 +131,9 @@ a.desc:after {
     text-decoration: underline;
 }
 
-.gg-main .mainimg {
-    width: 100%;
-    margin-bottom: 50px;
-}
-.gg-main h1.imgh1 {
-    position: absolute;
-    color: #ddd;
-    top: -20px;
-    left: 20px;
-    width: auto;
-    background: rgba(48, 48, 48, 0.6);
-    padding: 20px 0;
-}
-
 .gg-main .no-work ul {
-    background: #797983;
+    /*background: #797983;*/
+    background: #797983 url('../images/bg-sword.png') 0 0 no-repeat;
     border: 2px solid #2B2724;
     min-height: 260px;
     padding-top: 14px;
@@ -161,4 +152,19 @@ a.desc:after {
     display: block;
     padding: 10px;
     text-align: left;
+}
+
+.gg-main .mainimg {
+    width: 100%;
+    /*margin-bottom: 50px;*/
+    margin-bottom: 0px;
+}
+.gg-main h1.imgh1 {
+    position: absolute;
+    color: #ddd;
+    top: -20px;
+    left: 20px;
+    width: auto;
+    background: rgba(48, 48, 48, 0.6);
+    padding: 20px 0;
 }

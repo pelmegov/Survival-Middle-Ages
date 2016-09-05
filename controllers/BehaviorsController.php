@@ -42,7 +42,7 @@ class BehaviorsController extends Controller
                         'controllers' => ['site'],
                         'actions' => [
                             'logout', 'profile', 'edit-profile', 'work', 'market-resources',
-                            'get-sum', 'get-col', 'get-cost'
+                            'get-sum', 'get-col', 'get-cost', 'send-chat'
                         ],
                         'allow' => true,
                         'roles' => ['@'],

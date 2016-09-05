@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $user_id
  * @property string $nickname
+ * @property string $avatar_id
  *
  * @property User $user
  * @property ProfileResource[] $profileResources
@@ -34,7 +35,7 @@ class Profile extends \yii\db\ActiveRecord
     {
         return [
             'user_id' => 'User ID',
-            'nickname' => 'Nickname',
+            'nickname' => 'Nickname'
         ];
     }
 
@@ -210,6 +211,8 @@ class Profile extends \yii\db\ActiveRecord
             $user->email = isset($email) ? $email : $user->email;
 
             return $user->save() ? true : false;
+//        else:
+//            echo "Не удалось!";
         endif;
         return false;
     }
