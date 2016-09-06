@@ -39,8 +39,8 @@ $this->title = Yii::$app->name;
                         <ul>
                             <li><a href="<?= Url::to(['site/work', 'id' => 2]) ?>">Хочу рубить лес</a></li>
                             <li><a href="<?= Url::to(['site/work', 'id' => 3]) ?>">Хочу добывать камень</a></li>
-                            <li><a href="<?= Url::to(['site/work', 'id' => 4]) ?>">Хочу на охоту</a></li>
-                            <li><a href="<?= Url::to(['site/work', 'id' => 5]) ?>">Хочу ловить рыбу</a></li>
+                            <li><a href="<?= Url::to(['site/work', 'id' => 4]) ?>">Хочу ловить рыбу</a></li>
+                            <li><a href="<?= Url::to(['site/work', 'id' => 5]) ?>">Хочу на охоту</a></li>
                         </ul>
                     </div>
                 <? endif ?>

@@ -35,39 +35,40 @@ class m160803_085410_create_resource_table extends Migration
         $this->insert('{{resource}}', [
             'resource_id' => '2',
             'resource_name' => 'Дерево',
-            'needs_time' => '1',
-            'amount' => '2',
-            'gold_ratio' => '20',
+            'needs_time' => '10',
+            'amount' => '3',
+            'gold_ratio' => '3',
             'link_bg_image' => 'images/wood.jpg',
             'link_image' => 'images/res/wood.png',
         ]);
         $this->insert('{{resource}}', [
             'resource_id' => '3',
             'resource_name' => 'Камень',
-            'needs_time' => '1',
-            'amount' => '2',
-            'gold_ratio' => '35',
+            'needs_time' => '15',
+            'amount' => '4',
+            'gold_ratio' => '6',
             'link_bg_image' => 'images/stone.jpg',
             'link_image' => 'images/res/stone.png',
         ]);
         $this->insert('{{resource}}', [
             'resource_id' => '4',
-            'resource_name' => 'Шкуры животных',
-            'needs_time' => '1',
-            'amount' => '2',
-            'gold_ratio' => '50',
-            'link_bg_image' => 'images/hunting.jpg',
-            'link_image' => 'images/res/lither.png',
-        ]);
-        $this->insert('{{resource}}', [
-            'resource_id' => '5',
             'resource_name' => 'Рыба',
-            'needs_time' => '1',
-            'amount' => '8',
-            'gold_ratio' => '30',
+            'needs_time' => '20',
+            'amount' => '2',
+            'gold_ratio' => '16',
             'link_bg_image' => 'images/fishing.jpg',
             'link_image' => 'images/res/fish.png',
         ]);
+        $this->insert('{{resource}}', [
+            'resource_id' => '5',
+            'resource_name' => 'Шкуры животных',
+            'needs_time' => '30',
+            'amount' => '1',
+            'gold_ratio' => '49',
+            'link_bg_image' => 'images/hunting.jpg',
+            'link_image' => 'images/res/lither.png',
+        ]);
+
     }
 
     /**
